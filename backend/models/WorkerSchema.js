@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // Defines the schema for a worker.
@@ -21,13 +21,13 @@ const WorkerSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ['unverified', 'verified', 'suspended'], 
-      default: 'unverified',
+      enum: ["unverified", "verified", "suspended"],
+      default: "unverified",
     },
 
     trait: {
       type: [String],
-      default: []
+      default: [],
     },
 
     points: {
@@ -40,15 +40,15 @@ const WorkerSchema = new Schema(
       default: [],
     },
     canDenyTasks: {
-        type: Boolean,
-        default: false, // Only verified workers might have this set to true
-    }
+      type: Boolean,
+      default: false, // Only verified workers might have this set to true
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const Worker = mongoose.model('Worker', WorkerSchema);
+const Worker = mongoose.model("Worker", WorkerSchema);
 
 module.exports = Worker;

@@ -1,27 +1,31 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const ClientSchema = new mongoose.Schema(
+// Defines the schema for a client, integrated with Firebase Authentication.
+const clientSchema = new Schema(
   {
-    Name: {
-      type: String,
-      required: true,
-    },
-    email: {
+    // The Firebase UID is the primary link to the authentication service.
+    firebaseUid: {
       type: String,
       required: true,
       unique: true,
-      match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
+      index: true, // Index for fast lookups based on the authenticated user.
     },
-    passwordHash: {
+    name: {
       type: String,
       required: true,
     },
+    // Email and password are now handled by Firebase, so they are removed from this schema.
     companyName: {
       type: String,
-      default:null
+      default: "",
     },
-  }
-  { timestamps: true }
+  },
+  {
+    // Automatically adds `createdAt` and `updatedAt` timestamps.
+    timestamps: true,
+  },
 );
 
-module.exports = mongoose.model("client", ClientSchema);
+const Client = mongoose.model("Client", clientSchema);
+module.exports = Client;
