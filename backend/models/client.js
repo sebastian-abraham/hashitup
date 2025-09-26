@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const panelUserSchema = new mongoose.Schema(
   {
+    firebaseUid: {
+    type: String,
+    required: true,
+    unique: true,
+    },
     Name: {
       type: String,
       default: null,
@@ -16,4 +21,4 @@ const panelUserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("Client", clientSchema);
