@@ -1,12 +1,11 @@
 <script>
-	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
-
-	let { children } = $props();
+  import { slide } from "svelte/transition";
+  import { page } from "$app/stores";
+  import { quintOut } from "svelte/easing";
 </script>
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
-
-{@render children?.()}
+{#key $page.url.pathname}
+  <div>
+    <slot />
+  </div>
+{/key}
