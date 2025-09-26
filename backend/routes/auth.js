@@ -63,10 +63,19 @@ router.post("/signup", async (req, res) => {
     } else {
       // User does not exist (Signup)
       const finalName = name && name.trim() ? name : email;
+      // Collect extra fields from req.body
+      const { dateOfBirth, skills, status, linkedin, github, experience } =
+        req.body;
       const newUser = new User({
         firebaseUid: uid,
         email: email,
         name: finalName,
+        dateOfBirth,
+        skills,
+        status,
+        linkedin,
+        github,
+        experience,
       });
       await newUser.save();
       return res.status(201).json(newUser); // 201 Created
