@@ -24,6 +24,7 @@ admin.initializeApp({
 
 //! Routes for declared endpoints
 app.use("/", require("./routes/health")); //? Test route to check if the server is running
+app.use("/v1/auth", require("./routes/auth")); //? Authentication route
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

@@ -1,6 +1,6 @@
 // middleware/authMiddleware.js
 const admin = require('firebase-admin');
-const Client = require('../models/client'); // Your Mongoose User model
+const User = require('../models/UserSchema'); // Use the correct User model
 
 const authMiddleware = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -18,15 +18,15 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // 2. Check if the UID belongs to a user in your DB
-    const client = await Client.findOne({ firebaseUid: decodedToken.uid });
+    const user = await User.findOne({ firebaseUid: decodedToken.uid });
 
-    if (!client) {
+    if (!user) {
       // This case is important: the token is valid, but the user is not in our system.
       return res.status(403).send({ message: 'Forbidden: User not registered in our system.' });
     }
 
     // 3. Attach the MongoDB user object to the request
-    req.user = client;
+    req.user = user;
 
     next(); // Token is valid, user exists, proceed to the next function.
   } catch (error) {
