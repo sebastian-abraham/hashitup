@@ -1,15 +1,10 @@
 const mongoose = require("mongoose");
 
-const panelUserSchema = new mongoose.Schema(
+const ClientSchema = new mongoose.Schema(
   {
-    firebaseUid: {
-    type: String,
-    required: true,
-    unique: true,
-    },
     Name: {
       type: String,
-      default: null,
+      required: true,
     },
     email: {
       type: String,
@@ -17,8 +12,16 @@ const panelUserSchema = new mongoose.Schema(
       unique: true,
       match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
     },
-  },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
+      default:null
+    },
+  }
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Client", clientSchema);
+module.exports = mongoose.model("client", ClientSchema);
