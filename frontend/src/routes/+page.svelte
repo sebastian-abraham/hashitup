@@ -1,5 +1,5 @@
 <script>
-    import StartPage from '$lib/components/StartPage.svelte';
+   
     import LoginPage from '$lib/components/loginPage.svelte';
 </script>
 <h1>Welcome to SvelteKit</h1>
@@ -7,6 +7,4 @@
 
 
 
-
-<StartPage />
 <LoginPage />

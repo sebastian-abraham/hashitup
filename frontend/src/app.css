@@ -1,3 +1,26 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+body {
+	margin: 0;
+	font-family: 'Roboto Condensed', 'Roboto Mono', system-ui, sans-serif;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+main {
+	padding: 1rem;
+	max-width: 600px;
+	margin: auto;
+}
+
+@media (max-width: 600px) {
+	main {
+		padding: 0.5rem;
+		max-width: 100%;
+	}
+	h1 {
+		font-size: 1.5rem;
+	}
+}
+/* Removed Tailwind CSS imports */
