@@ -1,108 +1,132 @@
 <script>
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { getAuth, onAuthStateChanged } from 'firebase/auth';
-  import { loginWithEmail } from '$lib/api/auth.js';
-  import { loginWithGoogle } from '$lib/api/firebase.js';
-  let email = '';
-  let password = '';
-  let message = '';
-  let loading = false;
-  let googleLoading = false;
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { getAuth, onAuthStateChanged } from 'firebase/auth';
+	import { loginWithEmail } from '$lib/api/auth.js';
+	import { loginWithGoogle } from '$lib/api/firebase.js';
+	import { form } from '$app/server';
+	let email = '';
+	let password = '';
+	let message = '';
+	let loading = false;
+	let googleLoading = false;
 
-  onMount(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        goto('/test/dashboard');
-      }
-    });
-  });
+	onMount(() => {
+		const auth = getAuth();
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				goto('/test/dashboard');
+			}
+		});
+	});
 
-  async function handleLogin() {
-    message = '';
-    if (!email || !password) {
-      message = 'Please enter email and password.';
-      return;
-    }
-    loading = true;
-    try {
-      const result = await loginWithEmail({ email, password });
-      message = 'Login successful!';
-      // Optionally, store token or redirect here
-    } catch (err) {
-      message = err.message || 'Login failed.';
-    } finally {
-      loading = false;
-    }
-  }
+	async function handleLogin() {
+		message = '';
+		if (!email || !password) {
+			message = 'Please enter email and password.';
+			return;
+		}
+		loading = true;
+		try {
+			const result = await loginWithEmail({ email, password });
+			message = 'Login successful!';
+			// Optionally, store token or redirect here
+		} catch (err) {
+			message = err.message || 'Login failed.';
+		} finally {
+			loading = false;
+		}
+	}
 
-  async function handleGoogleLogin() {
-    message = '';
-    googleLoading = true;
-    try {
-      const result = await loginWithGoogle(false);
-      // result.backendUser is the user from your DB (created or found)
-      message = `Google login successful! Welcome, ${result.backendUser.name || result.firebaseUser.displayName}`;
-      // Optionally, store backendUser info or redirect here
-    } catch (err) {
-      message = err.message || 'Google login failed.';
-    } finally {
-      googleLoading = false;
-    }
-  }
+	async function handleGoogleLogin() {
+		message = '';
+		googleLoading = true;
+		try {
+			const result = await loginWithGoogle(false);
+			// result.backendUser is the user from your DB (created or found)
+			message = `Google login successful! Welcome, ${result.backendUser.name || result.firebaseUser.displayName}`;
+			// Optionally, store backendUser info or redirect here
+		} catch (err) {
+			message = err.message || 'Google login failed.';
+		} finally {
+			googleLoading = false;
+		}
+	}
 </script>
 
 <main>
-  <h1>Login</h1>
-  <form on:submit|preventDefault={handleLogin}>
-    <label>
-      Email:
-      <input type="email" bind:value={email} required />
-    </label>
-    <br />
-    <label>
-      Password:
-      <input type="password" bind:value={password} required />
-    </label>
-    <br />
-    <button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
-  </form>
-  <button on:click={handleGoogleLogin} disabled={googleLoading} style="margin-top:1em;">
-    {googleLoading ? 'Logging in with Google...' : 'Login with Google'}
-  </button>
-  {#if message}
-    <p>{message}</p>
-  {/if}
+	<form on:submit|preventDefault={handleLogin}>
+<div class="input-group-container">
+        <label class="label">
+          Email:
+          <input type="email" class="input" bind:value={email} required />
+        </label>
+        <div class="password_container">
+
+          <label class="label">
+            Password:
+            <input class="input" type="password" bind:value={password} required />
+          </label>
+        </div>
+
+    <div class="button_container">
+
+			<button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
+			<button on:click={handleGoogleLogin} disabled={googleLoading} style="margin-top:1em;">
+			  {googleLoading ? 'Logging in with Google...' : 'Login with Google'}
+			</button>
+			{#if message}
+			  <p>{message}</p>
+			{/if}
+		</div>
+	</div>
+	</form>
 </main>
 
 <style>
-.input {
-  max-width: 190px;
-  height: 44px;
-  background-color: #05060f0a;
-  border-radius: .5rem;
-  padding: 0 1rem;
-  border: 2px solid transparent;
-  font-size: 1rem;
-  transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
-}
-
-.label {
-  display: block;
-  margin-bottom: .3rem;
-  font-size: .9rem;
-  font-weight: bold;
-  color: #05060f99;
-  transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
-}
-
-.input:hover, .input:focus, .input-group:hover .input {
-  outline: none;
-  border-color: #05060f;
-}
-
-.input-group:hover .label, .input:focus {
-  color: #05060fc2;
-}
+	.input-group-container {
+		display: flex;
+    position:absolute;
+    top: 23%;
+    left: -1%;
+    flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 1.5rem;
+	}
+	.label {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: #222;
+		margin-top: 5rem;
+		margin-bottom: 0.7rem;
+		margin-right: 0;
+		margin-left: 3rem;
+		font-family: 'Roboto Condensed';
+	}
+	.input {
+		background: #e0e0e0;
+    position: relative;
+    left: -2.8rem;
+		border: 2px solid #111;
+		border-radius: 0.5rem;
+		padding: 0.8rem 1.5rem;
+		font-size: 1.3rem;
+		color: #111;
+		margin-bottom: 1.2rem;
+		outline: none;
+		transition: border-color 0.2s;
+		margin-left: 3rem;
+		width: 320px;
+		box-sizing: border-box;
+	}
+	.input:focus {
+		border-color: #333;
+	}
+  .password_container{
+    position: relative;
+    top: -3rem;
+  }
 </style>
