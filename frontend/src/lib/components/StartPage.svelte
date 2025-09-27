@@ -20,7 +20,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		margin-top: 1.5rem;
+		margin-top: 3.0rem;
 		margin-bottom: 1.5rem;
 		gap: 0.2em;
 		padding-left: 2vw;
