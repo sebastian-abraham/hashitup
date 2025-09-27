@@ -1,12 +1,13 @@
 <script>
-    import StartPage from '$lib/components/StartPage.svelte';
-    import LoginPage from '$lib/components/loginPage.svelte';
 </script>
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
 
+<svelte:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</svelte:head>
 
-
-
-<StartPage />
-<LoginPage />
+<slot />
